@@ -3,10 +3,9 @@ import { sequelize } from "../../services/services.db";
 
 export const User = sequelize.define("users", {
     id: {
-        type: DataTypes.BIGINT,
+        type: DataTypes.STRING,
         primaryKey: true,
-        autoIncrement: true,
-        allowNull: false
+        allowNull: true
     },
     email: {
         type: DataTypes.STRING,
@@ -24,7 +23,7 @@ export const User = sequelize.define("users", {
     token: {
         type: DataTypes.STRING,
         allowNull: true,
-        defaultValue: 0
+        defaultValue: "0"
     }
 }, {
     modelName: 'User',

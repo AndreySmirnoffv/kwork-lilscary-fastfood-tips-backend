@@ -1,5 +1,5 @@
 export type UserType = {
-    id?: bigint,
+    id?: string,
     email: string;
     password: string;
     balance?: string | number,

@@ -4,7 +4,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "server": "npx tsx index.ts"
+    "server": "npx tsx index.ts",
+    "build": "npx tsc index.ts --outDir dist --module ESNext --target ES2020 --esModuleInterop --moduleResolution Node",
+    "dev": "ts-node-dev index.ts",
+    "deploy": "pm2 start dist/index.js --name server"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +26,7 @@
     "nodemailer": "^6.9.16",
     "pg": "^8.13.1",
     "pg-hstore": "^2.3.4",
+    "pm2": "^5.4.3",
     "sequelize": "^6.37.5",
     "sequelize-typescript": "^2.1.6",
     "twilio": "^5.4.0"
