@@ -26,6 +26,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use("/api/verify", verifyRoutes)
 app.use('/api/token', tokenAuthRoutes)
+app.use('/api/uploads', )
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
