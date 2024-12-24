@@ -1,67 +1,62 @@
 import { Request, Response } from "express";
 import { checkout } from "../services/services.payment";
-import { ICapturePayment, ICreatePayment } from "@a2seven/yoo-checkout";
 import { UserModel } from "../models/user.model";
 import axios from "axios";
 import * as uuid from 'uuid'
 import { PaymentModel } from "../models/payment.model";
+import { IConfirmationType } from "@a2seven/yoo-checkout";
 
-export async function createPayment() Promise<void> {
+export async function createPayment(req: Request, res: Response): Promise<void> {
+  const { amount, email } = req.body;
 
-   // const {amount, email} = req.body
+  try {
 
-    const email = "smirnoffa675@gmail.com"
+    const payload = {
+    amount: {
+        value: amount,
+        currency: "RUB",
+    },
+    confirmation: {
+        type: 'redirect' as IConfirmationType, 
+        return_url: "https://t.me/e_vito_bot",
+    },
+    description: `Payment for ${email || "unknown user"}`,
+    };
 
-    try{
-        const payload: ICreatePayment = {
-            amount: {
-                value: "100",
-                currency: "RUB"
-            },
-            confirmation: {
-                type: 'redirect',
-                return_url:  "https://t.me/e_vito_bot"
-            },
-        }
 
-        // Создание платежа
-        const paymentResponse = await checkout.createPayment(payload);
+    const paymentResponse = await checkout.createPayment(payload);
 
-        console.log("Платеж успешно создан:", paymentResponse);
-        console.log(paymentResponse.id)
+    console.log("Платеж успешно создан:", paymentResponse);
 
-        // Ensure paymentId is not null
-        if (!paymentResponse.id) {
-            throw new Error('Payment ID is missing from the response');
-        }
-
-        // Подготовка данных для сохранения
-        const paymentData = {
-            paymentId: paymentResponse.id,
-            amount: paymentResponse.amount.value,
-            currency: paymentResponse.amount.currency,
-            isPaid: paymentResponse.paid,
-            confirmationUrl: paymentResponse.confirmation.confirmation_url, 
-            createdAt: new Date(paymentResponse.created_at), 
-            status: paymentResponse.status,
-            flag: 'pending'
-        };
-
-        // Сохранение в модель
-       //await PaymentModel.createPayment(paymentData, email);
-
-        console.log("Платеж сохранен в базе данных.");
-        //res.json(paymentResponse.confirmation.confirmation_url);
-        console.log(paymentResponse)
-        setInterval(async () => await getPayment(paymentResponse.id, email), 3000);
-
-    }catch(error){
-        console.log(error);
-       // res.status(500).json({ error: error.message });
+    if (!paymentResponse.id) {
+      throw new Error('Payment ID is missing from the response');
     }
+
+    const paymentData = {
+      paymentId: paymentResponse.id,
+      amount: paymentResponse.amount.value,
+      currency: paymentResponse.amount.currency,
+      isPaid: paymentResponse.paid,
+      confirmationUrl: paymentResponse.confirmation.confirmation_url,
+      createdAt: new Date(paymentResponse.created_at),
+      status: paymentResponse.status,
+      flag: 'pending',
+    };
+
+    await PaymentModel.createPayment(paymentData, email);
+
+    console.log("Платеж сохранен в базе данных.");
+
+    res.status(200).json({ confirmationUrl: paymentResponse.confirmation.confirmation_url });
+
+    setInterval(async () => await getPayment(paymentResponse.id, email), 3000);
+
+  } catch (error: any) {
+    console.error("Ошибка при создании платежа:", error);
+    res.status(500).json({ error: error.message });
+  }
 }
 
-await createPayment()
 
 export async function getPayment(paymentId: string, email: string): Promise<any>{
     try {

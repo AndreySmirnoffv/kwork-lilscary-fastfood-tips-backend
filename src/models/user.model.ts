@@ -74,4 +74,13 @@ export class UserModel{
     
         return affectedRows;
     }
+
+    static async avatar(location: string, email: string){
+        const avatar = await User.update(
+            {avatar_url: location},
+            {where: {email: email}}
+        )
+
+        return avatar
+    }
 }
