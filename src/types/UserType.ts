@@ -3,5 +3,9 @@ export type UserType = {
     email: string;
     password: string;
     balance?: string | number,
-    token?: string
+    token?: string,
+    firstname?: string,
+    lastname?: string,
+    fathername?: string,
+    avatarUrl?: string
 }

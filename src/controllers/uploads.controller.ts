@@ -25,7 +25,7 @@ export async function uploadAvatar(req: Request, res: Response): Promise<Respons
         try {
             const uploadResult = await s3.upload(params).promise();
 
-            await UserModel.avatar(uploadResult.Location, email);
+            await UserModel.updateAvatar(uploadResult.Location, email);
 
             return res.status(200).send({
                 message: "Файл был загружен",

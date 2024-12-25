@@ -4,6 +4,6 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 export const checkout = new YooCheckout({
-    shopId: "486116",
-    secretKey: "test_iU7WuytmxSZNm0hnnkAFFC2SC-5KK_QBeheAvuLCu18"
+    shopId: String(process.env.YOOKASSA_SHOP_ID),
+    secretKey: String(process.env.YOOKASSA_SECRET_KEY)
 })

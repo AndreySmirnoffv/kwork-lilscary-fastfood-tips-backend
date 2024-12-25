@@ -12,25 +12,19 @@ export async function createPayment(req: Request, res: Response): Promise<void> 
   try {
 
     const payload = {
-    amount: {
-        value: amount,
-        currency: "RUB",
-    },
-    confirmation: {
-        type: 'redirect' as IConfirmationType, 
-        return_url: "https://t.me/e_vito_bot",
-    },
-    description: `Payment for ${email || "unknown user"}`,
+        amount: {
+            value: amount,
+            currency: "RUB",
+        },
+        confirmation: {
+            type: 'redirect' as IConfirmationType, 
+            return_url: "https://t.me/e_vito_bot",
+        },
+        description: `Payment for ${email || "unknown user"}`,
     };
 
 
     const paymentResponse = await checkout.createPayment(payload);
-
-    console.log("Платеж успешно создан:", paymentResponse);
-
-    if (!paymentResponse.id) {
-      throw new Error('Payment ID is missing from the response');
-    }
 
     const paymentData = {
       paymentId: paymentResponse.id,
@@ -40,17 +34,13 @@ export async function createPayment(req: Request, res: Response): Promise<void> 
       confirmationUrl: paymentResponse.confirmation.confirmation_url,
       createdAt: new Date(paymentResponse.created_at),
       status: paymentResponse.status,
-      flag: 'pending',
     };
 
     await PaymentModel.createPayment(paymentData, email);
 
-    console.log("Платеж сохранен в базе данных.");
-
     res.status(200).json({ confirmationUrl: paymentResponse.confirmation.confirmation_url });
 
     setInterval(async () => await getPayment(paymentResponse.id, email), 3000);
-
   } catch (error: any) {
     console.error("Ошибка при создании платежа:", error);
     res.status(500).json({ error: error.message });
@@ -104,9 +94,8 @@ export async function payout(req: Request, res: Response){
                 "Content-Type": "application/json"
             },
             auth: {
-                //TODO: Подставить значения из .env
-                username: String(),
-                password: String()
+                username: String(process.env.YOOKASSA_SHOP_ID),
+                password: String(process.env.YOOKASSA_SECRET_KEY)
             }
         })
 
