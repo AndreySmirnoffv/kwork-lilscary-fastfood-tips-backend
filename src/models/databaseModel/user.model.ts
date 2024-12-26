@@ -5,7 +5,8 @@ export const User = sequelize.define("users", {
     id: {
         type: DataTypes.STRING,
         primaryKey: true,
-        allowNull: true
+        allowNull: true,
+        field: "id"
     },
     email: {
         type: DataTypes.STRING,
@@ -27,15 +28,23 @@ export const User = sequelize.define("users", {
     },
     firstname: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: true,
+        defaultValue: "Иван"
     },
     lastname: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: true,
+        defaultValue: "Иванов"
     },
     fathername: {
         type: DataTypes.STRING,
-        allowNull: true
+        allowNull: true,
+        defaultValue: "Иванович"
+    },
+    avatarUrl: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue: "0"
     }
 }, {
     modelName: 'User',

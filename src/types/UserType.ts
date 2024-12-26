@@ -1,8 +1,8 @@
 export type UserType = {
-    id?: string,
+    id: string,
     email: string;
     password: string;
-    balance?: string | number,
+    balance?: number,
     token?: string,
     firstname?: string,
     lastname?: string,

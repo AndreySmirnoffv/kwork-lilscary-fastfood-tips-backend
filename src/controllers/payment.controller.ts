@@ -7,7 +7,7 @@ import { PaymentModel } from "../models/payment.model";
 import { IConfirmationType } from "@a2seven/yoo-checkout";
 
 export async function createPayment(req: Request, res: Response): Promise<void> {
-  const { amount, email } = req.body;
+  const { amount,  userId} = req.body;
 
   try {
 
@@ -20,7 +20,7 @@ export async function createPayment(req: Request, res: Response): Promise<void> 
             type: 'redirect' as IConfirmationType, 
             return_url: "https://t.me/e_vito_bot",
         },
-        description: `Payment for ${email || "unknown user"}`,
+        description: `Payment for ${userId || "unknown user"}`,
     };
 
 
@@ -36,11 +36,11 @@ export async function createPayment(req: Request, res: Response): Promise<void> 
       status: paymentResponse.status,
     };
 
-    await PaymentModel.createPayment(paymentData, email);
+    await PaymentModel.createPayment(paymentData, userId);
 
     res.status(200).json({ confirmationUrl: paymentResponse.confirmation.confirmation_url });
 
-    setInterval(async () => await getPayment(paymentResponse.id, email), 3000);
+    setInterval(async () => await getPayment(paymentResponse.id, userId), 3000);
   } catch (error: any) {
     console.error("Ошибка при создании платежа:", error);
     res.status(500).json({ error: error.message });
@@ -48,7 +48,7 @@ export async function createPayment(req: Request, res: Response): Promise<void> 
 }
 
 
-export async function getPayment(paymentId: string, email: string): Promise<any>{
+export async function getPayment(paymentId: string, userId: string): Promise<any>{
     try {
 
         const getPaymentResponse = await checkout.getPayment(paymentId)
@@ -60,7 +60,7 @@ export async function getPayment(paymentId: string, email: string): Promise<any>
         }
         await checkout.capturePayment(paymentId, getPaymentResponse)
         PaymentModel.updatePaymentStatus(getPaymentResponse.id, getPaymentResponse.status)
-        UserModel.updateUserBalance(email, Number(getPaymentResponse.amount))
+        UserModel.updateUserBalance(userId, Number(getPaymentResponse.amount))
         console.log(getPaymentResponse)
         return getPaymentResponse
     } catch (error) {
@@ -71,7 +71,7 @@ export async function getPayment(paymentId: string, email: string): Promise<any>
 
 export async function payout(req: Request, res: Response){
 
-    const {amount, email, bankId} = req.body
+    const {amount, email, userId, bankId} = req.body
 
     try {
         const response = await axios.post("https://api.yookassa.ru/v3/payouts", {
@@ -99,7 +99,7 @@ export async function payout(req: Request, res: Response){
             }
         })
 
-        await UserModel.updateUserBalance(email, amount)
+        await UserModel.updateUserBalance(userId, amount)
         res.json({payoutData: response})
     } catch (error) {
         

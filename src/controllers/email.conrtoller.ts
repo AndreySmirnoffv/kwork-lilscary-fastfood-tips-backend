@@ -33,14 +33,14 @@ export async function verifyCode(req: Request, res: Response): Promise<any> {
 
     try {
         const codeExists = await CodeModel.findCode(code);
-
+        
         if (codeExists) {
             return res.json({auth: true});
         } else {
             return res.status(500).json({ message: "Такого кода нету" });
         }
     } catch (error) {
-        console.error('Error verifying code:', error);
+        console.error('Ошибка проверки кода', error);
         return res.status(500).json({ message: 'Ошибка сервера' });
     }
 }

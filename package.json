@@ -10,11 +10,13 @@
     "deploy": "pm2 start dist/index.js --name server"
   },
   "keywords": [],
-  "author": "",
+  "author": "AndreySmirnoffv",
   "license": "ISC",
   "description": "",
   "dependencies": {
     "@a2seven/yoo-checkout": "^1.1.4",
+    "@aws-sdk/client-s3": "^3.717.0",
+    "@aws-sdk/lib-storage": "^3.717.0",
     "axios": "^1.7.9",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",

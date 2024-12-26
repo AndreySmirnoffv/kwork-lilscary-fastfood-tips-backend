@@ -18,12 +18,12 @@ export class UserModel {
         return user ? (user.toJSON() as UserType) : null;
     }
 
-    static async findUser(email: string): Promise<UserType | null> {
-        return this.findUserByField({ email });
+    static async findUser(id: string): Promise<UserType | null> {
+        return this.findUserByField({ id });
     }
 
-    static async getUserBalance(email: string): Promise<number> {
-        const user = await this.findUser(email);
+    static async getUserBalance(id: string): Promise<number> {
+        const user = await this.findUser(id);
         if (!user || user.balance === undefined) {
             throw new Error("User not found or balance is undefined");
         }
@@ -38,19 +38,19 @@ export class UserModel {
         return this.findUserByField({ id: userId });
     }
 
-    static async updateUserBalance(email: string, amount: number): Promise<void> {
-        const balance = await this.getUserBalance(email);
+    static async updateUserBalance(id: string, amount: number): Promise<void> {
+        const balance = await this.getUserBalance(id);
 
         if (balance < amount) {
             throw new Error("Insufficient balance");
         }
 
         const newBalance = (balance - amount).toFixed(2);
-        await User.update({ balance: newBalance }, { where: { email } });
+        await User.update({ balance: newBalance }, { where: { id } });
     }
 
-    static async updateUserToken(token: string, email: string): Promise<number> {
-        const [affectedRows] = await User.update({ token }, { where: { email } });
+    static async updateUserToken(token: string, id: string): Promise<number> {
+        const [affectedRows] = await User.update({ token }, { where: { id } });
 
         if (affectedRows === 0) {
             throw new Error("User not found or token not updated");
@@ -59,28 +59,22 @@ export class UserModel {
         return affectedRows;
     }
 
-    static async updateAvatar(location: string, email: string): Promise<number> {
-        const [affectedRows] = await User.update({ avatar_url: location }, { where: { email } });
-
-        if (affectedRows === 0) {
-            throw new Error("User not found or avatar not updated");
-        }
+    static async updateAvatar(id: string, location: string): Promise<number> {
+        const [affectedRows] = await User.update({ avatarUrl: location }, { where: { id } });
 
         return affectedRows;
     }
+    
+    static async changeUserData(userId: string, data: Partial<UserType>): Promise<number> {
 
-    static async changeUserData(userId: string, firstname: string, lastname: string, fathersname: string): Promise<number> {
         const [affectedRows] = await User.update(
-            { firstname, lastname, fathersname },
+            data, 
             { where: { id: userId } }
         );
-
-        if (affectedRows === 0) {
-            throw new Error("User not found or data not updated");
-        }
-
+    
         return affectedRows;
     }
+    
 
     static async changeUserPassword(password: string, userId: string){
         return await User.update(

@@ -30,9 +30,9 @@ export async function register(req: Request, res: Response): Promise<Response | 
 
     await sendEmail(email, res);
 
-    return res.status(201).json({ message: "User registered successfully.", email });
+    return res.status(201).json({ email, password });
   } catch (error: any) {
-    console.error("Registration error:", error.message || error);
+    console.error(error)
 
     return res.status(500).json({ message: "Internal server error." });
   }
@@ -42,6 +42,7 @@ export async function login(req: Request, res: Response): Promise<UserType | any
   try {
     const { email, password } = req.body;
     console.log(req.body)
+    console.log(password)
 
     const user: UserType | null = await UserModel.findUser(email);
 
@@ -51,12 +52,12 @@ export async function login(req: Request, res: Response): Promise<UserType | any
 
     const isPasswordValid = await comparePasswords(password, user.password);
 
-    if (isPasswordValid) {
+    if (!isPasswordValid) {
       return res.status(400).json({ message: "Неверные данные" });
     }
 
     const token = jwt.sign(
-      { id: user.id, avatar: user.avatarUrl, email: user.email, password: password, balance: user.balance},
+      { id: user.id, avatar: user?.avatarUrl, email: user.email, password: password, balance: user.balance},
       process.env.JWT_SECRET as string,
       { expiresIn: "24h" }
     );
@@ -69,6 +70,7 @@ export async function login(req: Request, res: Response): Promise<UserType | any
     return res.json(user);
   } catch (error) {
     console.error("login error: ", error)
+    return res.status(500).send({message: "Ошибка сервера"})
   }
   
 }
