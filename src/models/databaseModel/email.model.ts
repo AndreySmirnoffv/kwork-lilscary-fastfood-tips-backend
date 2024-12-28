@@ -23,3 +23,4 @@ export const Sms = sequelize.define("sms", {
     updatedAt: 'updated_at', 
     createdAt: 'created_at',  
 })
+

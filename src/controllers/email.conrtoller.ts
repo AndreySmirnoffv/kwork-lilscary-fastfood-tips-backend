@@ -44,3 +44,4 @@ export async function verifyCode(req: Request, res: Response): Promise<any> {
         return res.status(500).json({ message: 'Ошибка сервера' });
     }
 }
+

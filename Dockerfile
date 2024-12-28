@@ -1,19 +1,17 @@
-FROM node:23-alpine AS build
+FROM node:23-alpine AS backend
 
 WORKDIR /app
+
 COPY package.json package.json
+
 RUN npm install
 
-COPY . . 
+COPY . .
+
 RUN npm run build
 
-FROM nginx:stable-alpine
+EXPOSE 8000
 
-WORKDIR /usr/share/nginx/html
-COPY --from=build /app/dist .
+# CMD ["npm", "start", "deploy"]
 
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-EXPOSE 80 443
-
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["node", "dist/index.js"]

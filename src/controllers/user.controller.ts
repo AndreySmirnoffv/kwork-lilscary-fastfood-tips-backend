@@ -30,7 +30,7 @@ export async function changeUserData(req: Request, res: Response): Promise<Respo
         return res.status(200).send({ message: "Данные успешно изменены" });
     } catch (error) {
         console.error("Ошибка при изменении данных пользователя:", error);
-        return res.status(500).send({ message: "Ошибка сервера", error: error.message });
+        return res.status(500).send({ message: "Ошибка сервера", error: error });
     }
 }
 

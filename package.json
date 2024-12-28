@@ -4,15 +4,17 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "server": "npx tsx index.ts",
-    "build": "npx tsc index.ts --outDir dist --module ESNext --target ES2020 --esModuleInterop --moduleResolution Node",
-    "dev": "ts-node-dev index.ts",
-    "deploy": "pm2 start dist/index.js --name server"
+    "server": "NODE_OPTIONS='--experimental-specifier-resolution=node' npx tsx index.ts",
+    "dev": "NODE_OPTIONS='--experimental-specifier-resolution=node' nodemon --watch ./ --ext ts --exec tsx ./index.ts",
+    "build-dev": "ENVIRONMENT=development npx tsc --project tsconfig.json",
+    "build-prod": "ENVIRONMENT=production npx tsc --project tsconfig.json",
+    "create-deploy": "NODE_OPTIONS='--experimental-specifier-resolution=node' pm2 start dist/index.js --name server && pm2 startup",
+    "start-deploy": "pm2 start server"
   },
   "keywords": [],
   "author": "AndreySmirnoffv",
   "license": "ISC",
-  "description": "",
+  "description": "back-end for tips application",
   "dependencies": {
     "@a2seven/yoo-checkout": "^1.1.4",
     "@aws-sdk/client-s3": "^3.717.0",
@@ -42,6 +44,9 @@
     "@types/nodemailer": "^6.4.17",
     "@types/sequelize": "^4.28.20",
     "@types/uuid": "^10.0.0",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.19.2",
     "typescript": "^5.7.2"
   }
 }

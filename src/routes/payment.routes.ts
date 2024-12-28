@@ -1,4 +1,4 @@
-import { createPayment, getPayment, payout } from "../controllers/payment.controller";
+import { createPayment, payout } from "../controllers/payment.controller";
 import { router } from "./router";
 
 router.post("/create-payment", createPayment)

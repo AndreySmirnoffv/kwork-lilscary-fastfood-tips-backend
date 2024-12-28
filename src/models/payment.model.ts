@@ -1,15 +1,13 @@
-import { ICreatePayment } from "@a2seven/yoo-checkout";
-import { IPayment } from "../types/IPayment";
 import { Payment } from "./databaseModel/payment.model";
 
 export class PaymentModel{
-    static async createPayment(payload, email: string){
+    static async createPayment(payload: any, userId: string){
         return Payment.create({
             id: payload.id,
             status: payload.status,
             isPaid: payload.isPaid,
             flaf: payload.flag,
-            email: email
+            email: userId
         })
     }
 
