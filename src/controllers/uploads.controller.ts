@@ -13,7 +13,7 @@ export async function uploadAvatar(req: Request, res: Response): Promise<Respons
     }
 
     const base64Data = avatar.split(",")[1];
-    const uniqueTimestamp = Date.now(); // Используем одно значение для ключа и URL
+    const uniqueTimestamp = Date.now(); 
 
     const key = `uploads/${uniqueTimestamp}.jpg`;
 

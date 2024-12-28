@@ -11,7 +11,6 @@ export class UserModel {
 
         return newUser.toJSON() as UserType;
     }
-    
 
     private static async findUserByField(field: Partial<UserType>): Promise<UserType | null> {
         const user = await User.findOne({ where: field });
