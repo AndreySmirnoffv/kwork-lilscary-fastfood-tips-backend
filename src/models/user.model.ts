@@ -21,6 +21,10 @@ export class UserModel {
         return this.findUserByField({ id });
     }
 
+    static async findUserByEmail(email: string): Promise<UserType | null>{
+        return this.findUserByField({email})
+    }
+
     static async getUserBalance(id: string): Promise<number> {
         const user = await this.findUser(id);
         if (!user || user.balance === undefined) {
@@ -59,7 +63,7 @@ export class UserModel {
     }
 
     static async updateAvatar(id: string, location: string): Promise<number> {
-        const [affectedRows] = await User.update({ avatarUrl: location }, { where: { id } });
+        const [affectedRows] = await User.update({ avatarurl: location }, { where: { id } });
 
         return affectedRows;
     }

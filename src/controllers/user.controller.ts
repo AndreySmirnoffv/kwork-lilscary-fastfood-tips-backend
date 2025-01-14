@@ -61,3 +61,21 @@ export async function changePassword(req: Request, res: Response): Promise<Respo
         return res.status(500).json({ message: "Ошибка сервера" });
     }
 }
+
+export async function getUser(req: Request, res: Response): Promise<Response | any>{
+    try {
+        const {userId} = req.body
+
+        const user: UserType | null = await UserModel.findUser(userId)
+
+        if(!user){
+            return res.json(404).send({message: "Такого пользователя не существует"})
+        }
+
+        return res.json({message: user})
+
+    } catch (error) {
+        console.error("Ошибка при получении пользователя", error)
+        return res.status(500).send({message: "Ошибка сервера"})
+    }
+}

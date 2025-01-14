@@ -2,6 +2,9 @@ import { Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { AuthRequest } from '../types/AuthRequest';
 import { UserModel } from '../models/user.model';
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 export async function authenticateJwt(req: AuthRequest, res: Response, next: NextFunction): Promise<any> {
     const authHeader = req.headers.authorization;
@@ -24,7 +27,7 @@ export async function authenticateJwt(req: AuthRequest, res: Response, next: Nex
         if (error.name === "TokenExpiredError") {
             return res.status(403).json({ message: "Token expired" });
         }
-        res.redirect("https://www.google.com")
-        return res.status(403).json({ message: "Invalid token", error });
+        console.log(error)
+        return res.status(403).json({ message: "Invalid token" });
     }
 }

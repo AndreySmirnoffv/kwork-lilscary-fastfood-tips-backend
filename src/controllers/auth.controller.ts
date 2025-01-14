@@ -44,7 +44,7 @@ export async function login(req: Request, res: Response): Promise<UserType | any
     console.log(req.body)
     console.log(password)
 
-    const user: UserType | null = await UserModel.findUser(email);
+    const user: UserType | null = await UserModel.findUserByEmail(email);
 
     if (!user) {
       return res.status(404).json({ message: "Пользователь не найден" });
@@ -57,7 +57,7 @@ export async function login(req: Request, res: Response): Promise<UserType | any
     }
 
     const token = jwt.sign(
-      { id: user.id, avatar: user?.avatarUrl, email: user.email, password: password, balance: user.balance},
+      { id: user.id, avatar: user?.avatarurl, email: user.email, password: password, balance: user.balance},
       process.env.JWT_SECRET as string,
       { expiresIn: "24h" }
     );

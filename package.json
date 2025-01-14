@@ -4,24 +4,26 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "server": "NODE_OPTIONS='--experimental-specifier-resolution=node' npx tsx index.ts",
-    "dev": "NODE_OPTIONS='--experimental-specifier-resolution=node' nodemon --watch ./ --ext ts --exec tsx ./index.ts",
-    "build-dev": "ENVIRONMENT=development npx tsc --project tsconfig.json",
-    "build-prod": "ENVIRONMENT=production npx tsc --project tsconfig.json",
-    "create-deploy": "NODE_OPTIONS='--experimental-specifier-resolution=node' pm2 start dist/index.js --name server && pm2 startup",
-    "start-deploy": "pm2 start server"
+    "server": "npx tsx index.ts",
+    "build": "npx tsc index.ts --outDir dist --module ESNext --target ES2020 --esModuleInterop --moduleResolution Node",
+    "dev": "ts-node-dev index.ts",
+    "deploy": "pm2 start dist/index.js --name server",
+    "start-deploy": "pm2 start server",
+    "start-server": "node dist/index.js"
   },
   "keywords": [],
   "author": "AndreySmirnoffv",
   "license": "ISC",
-  "description": "back-end for tips application",
+  "description": "",
   "dependencies": {
     "@a2seven/yoo-checkout": "^1.1.4",
     "@aws-sdk/client-s3": "^3.717.0",
     "@aws-sdk/lib-storage": "^3.717.0",
     "axios": "^1.7.9",
     "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
+    "csurf": "^1.10.0",
     "dotenv": "^16.4.7",
     "express": "^4.21.1",
     "jsonwebtoken": "^9.0.2",
@@ -37,16 +39,15 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
+    "@types/cookie-parser": "^1.4.8",
     "@types/cors": "^2.8.17",
+    "@types/csurf": "^1.11.5",
     "@types/express": "^5.0.0",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^22.9.3",
     "@types/nodemailer": "^6.4.17",
     "@types/sequelize": "^4.28.20",
     "@types/uuid": "^10.0.0",
-    "nodemon": "^3.1.9",
-    "ts-node": "^10.9.2",
-    "tsx": "^4.19.2",
     "typescript": "^5.7.2"
   }
 }

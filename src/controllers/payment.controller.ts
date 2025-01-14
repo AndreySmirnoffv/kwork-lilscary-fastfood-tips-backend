@@ -7,7 +7,7 @@ import { PaymentModel } from "../models/payment.model";
 import { IConfirmationType } from "@a2seven/yoo-checkout";
 
 export async function createPayment(req: Request, res: Response): Promise<void> {
-  const { amount,  userId} = req.body;
+  const { amount,  userId } = req.body;
 
   try {
 
@@ -22,7 +22,6 @@ export async function createPayment(req: Request, res: Response): Promise<void> 
         },
         description: `Payment for ${userId || "unknown user"}`,
     };
-
 
     const paymentResponse = await checkout.createPayment(payload);
 

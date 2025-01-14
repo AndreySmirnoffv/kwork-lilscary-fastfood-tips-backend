@@ -41,7 +41,7 @@ export const User = sequelize.define("users", {
         allowNull: true,
         defaultValue: "Иванович"
     },
-    avatarUrl: {
+    avatarurl: {
         type: DataTypes.STRING,
         allowNull: true,
         defaultValue: "0"
