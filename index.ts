@@ -11,19 +11,20 @@ dotenv.config({ path: "./.env" });
 export const app: Application = express();
 export const csrfProtection = csrf({cookie: true})
 
-
 app.use(bodyParser.json({limit: '25mb'}));
 app.use(bodyParser.urlencoded({limit: '25mb', extended: true}));
 
+app.use(cookieParser())
+
 app.use(cors({
-    origin: String(process.env.FRONTEND_API),
+    origin: [process.env.FRONTEND_API, process.env.SERVER_URL],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
 }))
-
-app.use(cookieParser())
 
 app.use("/api", AppRoutes)
 
 app.listen(process.env.PORT, () => {
-    console.log(`Server started on port http://localhost:${process.env.PORT}`);
+    console.log(`Server started on port ${process.env.SERVER_URL}:${process.env.PORT}`);
 });

@@ -1,6 +1,6 @@
 server {
     listen 80;
-    server_name  45.12.236.146;
+    server_name 45.12.236.146;
 
     root /var/www/html/dist;
     index index.html index.htm;
