@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken';
-import { UserModel } from "../models/user.model";
-import { comparePasswords, hashPassword } from "../utils/utils.hash";
-import { sendEmail } from "./email.conrtoller";
-import { generateId } from "../utils/utils.generateId";
+import { UserModel } from "../models/user.model.js";
+import { comparePasswords, hashPassword } from "../utils/utils.hash.js";
+import { sendEmail } from "./email.conrtoller.js";
+import { generateId } from "../utils/utils.generateId.js";
 export async function register(req, res) {
     try {
         const { email, password } = req.body;

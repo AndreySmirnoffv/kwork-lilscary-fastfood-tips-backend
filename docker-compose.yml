@@ -28,7 +28,7 @@ services:
       DB_SCHEMA: lilscary
 
   db:
-    image: postgres:15
+    image: postgres:16
     environment:
       POSTGRES_USER: lilscary
       POSTGRES_PASSWORD: root

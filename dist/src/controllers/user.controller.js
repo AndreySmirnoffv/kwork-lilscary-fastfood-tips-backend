@@ -1,5 +1,5 @@
-import { UserModel } from '../models/user.model';
-import { comparePasswords, hashPassword } from '../utils/utils.hash';
+import { UserModel } from '../models/user.model.js';
+import { comparePasswords, hashPassword } from '../utils/utils.hash.js';
 export async function changeUserData(req, res) {
     try {
         const { firstname, lastname, fathername, id } = req.body;
@@ -45,20 +45,6 @@ export async function changePassword(req, res) {
     catch (error) {
         console.error("Ошибка смены пароля", error);
         return res.status(500).json({ message: "Ошибка сервера" });
-    }
-}
-export async function getUser(req, res) {
-    try {
-        const { userId } = req.body;
-        const user = await UserModel.findUser(userId);
-        if (!user) {
-            return res.json(404).send({ message: "Такого пользователя не существует" });
-        }
-        return res.json({ message: user });
-    }
-    catch (error) {
-        console.error("Ошибка при получении пользователя", error);
-        return res.status(500).send({ message: "Ошибка сервера" });
     }
 }
 

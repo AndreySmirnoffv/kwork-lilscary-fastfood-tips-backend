@@ -1,8 +1,8 @@
-import { checkout } from "../services/services.payment";
-import { UserModel } from "../models/user.model";
+import { checkout } from "../services/services.payment.js";
+import { UserModel } from "../models/user.model.js";
 import axios from "axios";
 import * as uuid from 'uuid';
-import { PaymentModel } from "../models/payment.model";
+import { PaymentModel } from "../models/payment.model.js";
 export async function createPayment(req, res) {
     const { amount, userId } = req.body;
     try {

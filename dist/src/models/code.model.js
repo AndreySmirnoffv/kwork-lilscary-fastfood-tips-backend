@@ -1,4 +1,4 @@
-import { Sms } from "./databaseModel/email.model";
+import { Sms } from "./databaseModel/email.model.js";
 export class CodeModel {
     static async createCode(email, code) {
         return await Sms.create({

@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../../services/services.db";
+import { sequelize } from "../../services/services.db.js";
 export const Sms = sequelize.define("sms", {
     id: {
         type: DataTypes.BIGINT,

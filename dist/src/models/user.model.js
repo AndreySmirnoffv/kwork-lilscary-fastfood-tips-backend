@@ -1,4 +1,4 @@
-import { User } from "./databaseModel/user.model";
+import { User } from "./databaseModel/user.model.js";
 export class UserModel {
     static async createUser(user) {
         const newUser = await User.create({

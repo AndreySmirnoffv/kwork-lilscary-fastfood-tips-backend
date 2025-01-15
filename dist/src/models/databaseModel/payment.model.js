@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../../services/services.db";
+import { sequelize } from "../../services/services.db.js";
 export const Payment = sequelize.define("payments", {
     paymentid: {
         type: DataTypes.STRING,

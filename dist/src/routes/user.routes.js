@@ -1,5 +1,5 @@
-import { changePassword, changeUserData, getUser } from "../controllers/user.controller";
-import { router } from "./router";
+import { changePassword, changeUserData, getUser } from "../controllers/user.controller.js";
+import { router } from "./router.js";
 router.patch("/change-userdata", changeUserData);
 router.patch("/change-userpassword", changePassword);
 router.post("/get-user", getUser);

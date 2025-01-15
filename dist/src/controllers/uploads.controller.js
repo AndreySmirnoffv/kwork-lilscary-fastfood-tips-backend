@@ -1,6 +1,6 @@
-import { s3 } from "../services/services.bucket";
+import { s3 } from "../services/services.bucket.js";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
-import { UserModel } from "../models/user.model";
+import { UserModel } from "../models/user.model.js";
 
 export async function uploadAvatar(req, res) {
     const { id, avatar } = req.body;

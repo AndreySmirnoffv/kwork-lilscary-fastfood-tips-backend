@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../../services/services.db";
+import { sequelize } from "../../services/services.db.js";
 export const User = sequelize.define("users", {
     id: {
         type: DataTypes.STRING,

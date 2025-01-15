@@ -1,4 +1,4 @@
-import { Payment } from "./databaseModel/payment.model";
+import { Payment } from "./databaseModel/payment.model.js";
 export class PaymentModel {
     static async createPayment(payload, userId) {
         return Payment.create({

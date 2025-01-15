@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
-import { transport } from "../services/services.email";
-import { CodeModel } from "../models/code.model";
+import { transport } from "../services/services.email.js";
+import { CodeModel } from "../models/code.model.js";
 dotenv.config();
 export async function sendEmail(email, res) {
     const code = String(Math.floor(Math.random() * 9000) + 1000);

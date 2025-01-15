@@ -1,7 +1,7 @@
-import authRoutes from './auth.routes';
-import paymentRoutes from './payment.routes';
-import verifyRoutes from './sms.routes';
-import avatarUploadsRoutes from './avatar.routes';
+import authRoutes from './auth.routes.js';
+import paymentRoutes from './payment.routes.js';
+import verifyRoutes from './sms.routes.js';
+import avatarUploadsRoutes from './avatar.routes.js';
 import userRoutes from './user.routes.js';
 import router from './auth.routes.js';
 router.use("/auth", authRoutes);

@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import AppRoutes from './src/routes/app.routes';
+import AppRoutes from './src/routes/app.routes.js';
 dotenv.config({ path: "./.env" });
 export const app = express();
 app.use(bodyParser.json({ limit: '25mb' }));
