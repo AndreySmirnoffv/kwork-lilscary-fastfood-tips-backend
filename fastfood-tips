@@ -1,4 +1,4 @@
-server{                                                                                my_site *                                                                                         server {
+server{
     server_name fastfood-tips.ru www.fastfood-tips.ru;
 
     root /var/www/html/dist;
@@ -28,17 +28,14 @@ server{                                                                         
 }
 
 server {
-    if ($host = www.fastfood-tips.ru) {
-        return 301 https://$host$request_uri;
-    } 
-
-
-    if ($host = fastfood-tips.ru) {
-        return 301 https://$host$request_uri;
-    } 
-
-    listen ip:80;
-    listen ip2:80;
     server_name fastfood-tips.ru www.fastfood-tips.ru;
+
+    listen ip:port;
+    listen ip:port;
+
+    if ($host ~* ^(www\.)?fastfood-tips\.ru$) {
+        return 301 https://$host$request_uri;
+    }
+    
     return 404;
 }
