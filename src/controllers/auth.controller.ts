@@ -5,7 +5,6 @@ import { comparePasswords, hashPassword } from "../utils/utils.hash";
 import { sendEmail } from "./email.conrtoller";
 import { UserType } from "../types/UserType";
 import { generateId } from "../utils/utils.generateId";
-import { CodeModel } from "../models/code.model";
 
 
 export async function register(req: Request, res: Response): Promise<Response | any> {

@@ -12,7 +12,7 @@ export class PaymentModel{
     }
 
     static async updatePaymentStatus(paymentId: string, paymentStatus: string){
-        const payment = Payment.findOne({
+        const payment= await Payment.findOne({
             where: {
                 id: paymentId
             }
