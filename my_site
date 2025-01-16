@@ -1,6 +1,5 @@
-server {
-    listen 80;
-    server_name 45.12.236.146;
+server{                                                                                my_site *                                                                                         server {
+    server_name fastfood-tips.ru www.fastfood-tips.ru;
 
     root /var/www/html/dist;
     index index.html index.htm;
@@ -9,15 +8,37 @@ server {
 
     location / {
         try_files $uri $uri/ /index.html;
+        allow all;
     }
 
     location /api {
-        proxy_pass http://45.12.236.146:8000;
+        proxy_pass http://ip:port;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
     }
+
+
+    listen 443 ssl;
+    ssl_certificate /etc/letsencrypt/live/www.fastfood-tips.ru/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/www.fastfood-tips.ru/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 }
 
+server {
+    if ($host = www.fastfood-tips.ru) {
+        return 301 https://$host$request_uri;
+    } 
 
+
+    if ($host = fastfood-tips.ru) {
+        return 301 https://$host$request_uri;
+    } 
+
+    listen ip:80;
+    listen ip2:80;
+    server_name fastfood-tips.ru www.fastfood-tips.ru;
+    return 404;
+}
