@@ -35,6 +35,7 @@ export async function verifyCode(req: Request, res: Response): Promise<any> {
         const codeExists = await CodeModel.findCode(code);
         
         if (codeExists) {
+            CodeModel.destroyCode(code)
             return res.json({auth: true});
         } else {
             return res.status(500).json({ message: "Такого кода нету" });

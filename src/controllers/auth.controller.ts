@@ -5,6 +5,7 @@ import { comparePasswords, hashPassword } from "../utils/utils.hash";
 import { sendEmail } from "./email.conrtoller";
 import { UserType } from "../types/UserType";
 import { generateId } from "../utils/utils.generateId";
+import { CodeModel } from "../models/code.model";
 
 
 export async function register(req: Request, res: Response): Promise<Response | any> {
@@ -29,7 +30,6 @@ export async function register(req: Request, res: Response): Promise<Response | 
     await UserModel.createUser(newUser);
 
     await sendEmail(email, res);
-
     return res.status(201).json({ email, password });
   } catch (error: any) {
     console.error(error)
