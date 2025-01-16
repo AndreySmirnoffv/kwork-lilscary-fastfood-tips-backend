@@ -19,7 +19,6 @@ server{
         proxy_set_header X-Forwarded-Proto $scheme;
     }
 
-
     listen 443 ssl;
     ssl_certificate /etc/letsencrypt/live/www.fastfood-tips.ru/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/www.fastfood-tips.ru/privkey.pem;
