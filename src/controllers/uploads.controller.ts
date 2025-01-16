@@ -28,7 +28,7 @@ export async function uploadAvatar(req: Request, res: Response): Promise<Respons
 
         await s3.send(command);
 
-        const fileUrl = `https://avatar-storage-lilscary.s3.amazonaws.com/${key}`;
+        const fileUrl = `${process.env.AWS_ENDPOINT}/${key}`;
 
         await UserModel.updateAvatar(id, fileUrl);
 
