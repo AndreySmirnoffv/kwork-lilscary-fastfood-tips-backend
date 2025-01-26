@@ -19,11 +19,11 @@ export async function sendEmail(email: string) {
         console.log("Email sent:", response);
 
         transport.verify((error, success) => {
-            if (error) {
-                console.error("Error:", error);
-            } else {
-                console.log("Server is ready to take our messages:", success);
+            if (!error) {
+                throw Error(`Server is ready to take our messages: ${error}`);
             }
+
+            console.log("success", success)
         });
 
         await CodeModel.createCode(email, code);
