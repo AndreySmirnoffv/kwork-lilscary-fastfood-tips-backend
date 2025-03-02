@@ -13,5 +13,5 @@ export async function comparePasswords (plainPassword: string, hashedPassword: s
     throw new Error("Пароль и хеш обязательны для сравнения");
   }
   
-  return bcrypt.compare(plainPassword, hashedPassword);
+  return await bcrypt.compare(plainPassword, hashedPassword);
 }
