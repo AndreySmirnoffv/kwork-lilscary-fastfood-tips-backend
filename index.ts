@@ -8,7 +8,7 @@ import csrf from 'csurf'
 
 dotenv.config({ path: "./.env" });
 
-export const app: Application = express();
+const app: Application = express();
 export const csrfProtection = csrf({cookie: true})
 
 app.use(bodyParser.json({limit: '25mb'}));
