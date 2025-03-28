@@ -25,6 +25,7 @@ export async function authenticateJwt(req: AuthRequest, res: Response, next: Nex
         next()
     } catch (error: any) {
         if (error.name === "TokenExpiredError") {
+            res.redirect(String(process.env.FRONTEND_API + "/auth"))
             return res.status(403).json({ message: "Token expired" });
         }
         console.log(error)

@@ -10,7 +10,6 @@ export async function createPayment(req: Request, res: Response): Promise<void> 
   const { amount,  userId } = req.body;
 
   try {
-
     const payload = {
         amount: {
             value: amount,
